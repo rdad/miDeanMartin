@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MiDeanMartin</title>
+</head>
+<body>
+	<script src="src/mdm.js"></script>
+	<script>
+		console.log('GO Dean '+mdm.VERSION+' !');
+
+		mdm.ready(function(){
+
+			/*mdm.normalize()
+				.learn();*/
+			mdm.normalize_value();
+			
+			mdm.map('2- ReMOTE LE')
+			 	.bind(74, 	function(value){
+			 		console.log('74: '+value);
+			 	}).bind(71, function(value){
+			 		console.log('88: '+value);
+			 	}).bind(21, function(value){
+			 		console.log('3: '+value);
+			 	}).start();
+		});
+	</script>
+</body>
+</html>
