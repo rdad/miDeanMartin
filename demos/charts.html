@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MiDeanMartin : Charts controlled</title>
+
+	
+</head>
+<body>
+
+	<script src="../src/mdm.js"></script>
+	<script src="js/chart.min.js"></script>
+	<script>
+
+		// Charts.js
+		
+		var canvas 				= document.createElement('canvas');
+		canvas.id     			= "myChart";
+		canvas.width  			= window.innerWidth - 8;
+		canvas.height 			= window.innerHeight - 20;
+		canvas.style.zIndex   	= 8;
+		canvas.style.position 	= "absolute";
+
+		document.body.appendChild(canvas);
+
+		// Get the context of the canvas element we want to select
+		var ctx 	= canvas.getContext("2d");
+
+		var data = {
+		    labels: ["January", "February", "March", "April", "May", "June", "July"],
+		    datasets: [
+		        {
+		            label: "My First dataset",
+		            fillColor: "rgba(220,220,220,0.2)",
+		            strokeColor: "rgba(220,220,220,1)",
+		            pointColor: "rgba(220,220,220,1)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(220,220,220,1)",
+		            data: [0, 59, 80, 81, 56, 55, 127]
+		        }
+		    ]
+		};
+		var options = {};
+		var myChart = new Chart(ctx).Line(data, options);
+
+		console.log('GO Dean '+mdm.VERSION+' !');
+
+		var scale = 100;
+
+		function update_chart(pt, value){
+			myChart.datasets[0].points[pt].value = value * scale;
+			myChart.update();
+		}
+
+		mdm.ready(function(){
+
+			mdm.normalize_value();
+			
+			mdm.map('2- ReMOTE LE')
+				.control(74).to(function(value){
+					update_chart(0, value);
+				})
+				.control(71).to(function(){
+					update_chart(1, value);
+				})
+				.control(21).to(function(){
+					update_chart(2, value);
+				})
+				.start();
+		});
+	</script>
+</body>
+</html>

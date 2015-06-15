@@ -46,6 +46,8 @@
 			return this;
 		},
 
+		// ----- MODE MAPPING -----
+		
 		map: function(device_name){
 
 			if(!web_audio_api_is_supported)	clog('Dean has no midi device');
@@ -54,7 +56,8 @@
 
 			if(d){
 				data = {
-					device: d
+					device: d,
+					control: null
 				};
 				mode = MODE_MAPPING;
 				
@@ -66,16 +69,27 @@
 			return this;
 		},
 
-		bind: function(code, callback){
+		control: function( code ){
 
 			if(!web_audio_api_is_supported)	clog('Dean has no midi device');
-
 			if(mode != MODE_MAPPING || !data.device)	return this;
-			data.device.map[code] 	= callback;
-			data.device.mapped 		= true;
 
-			clog('Dean has binded '+code);
+			data.control = code;
 			return this;
+		},
+
+		to: function( callback ){
+
+			if(!web_audio_api_is_supported)	clog('Dean has no midi device');
+			if(mode != MODE_MAPPING || !data.device || !data.control)	return this;
+
+			data.device.map[data.control] 	= callback;
+			data.device.mapped 				= true;
+			data.control 					= null;
+
+			clog('Dean has binded '+data.control);
+			return this;
+
 		},
 
 		then: function(then_callback){
@@ -117,7 +131,7 @@
 		get_interface: function(){
 
 			if(!web_audio_api_is_supported)	clog('Dean has no midi device');
-			
+
 			return midi_interface;
 		},
 
@@ -153,7 +167,7 @@
 
 	    		clog('Dean says "MIDI is here to swing !"');
 	    		prepare_midi_device();
-	    		callback();
+	    		if(callback)	callback();
 
 	    	}, function(e){
 	    		clog('Dean says "No MIDI support in your browser man!"');
@@ -196,7 +210,7 @@
 		};
 
 		dispatch(message, device);
-		//clog('Midi data', message);
+		clog(message);
 		//clog(MIDIMessageEvent);
 	}
 
