@@ -22,7 +22,13 @@
 
 		ready: function(ready_callback){
 
-			callback = ready_callback;
+			console.log('Dean is ready to play !');
+
+			if(web_audio_api_is_supported){
+				ready_callback();
+			}else{
+				callback = ready_callback;
+			}			
 			return this;
 		},
 
@@ -34,17 +40,21 @@
 			return this;
 		},
 
-		learn: function(){
+		learn: function( callback ){
 
 			if(!web_audio_api_is_supported)	clog('Dean has no midi device');
 
 			data = {
-				note: null
+				note: null,
+				callback: null
 			};
 			mode = MODE_LEARN;
+			if(callback)	data.callback = callback;
+
 			clog('Dean is learning ...');
 			return this;
 		},
+
 
 		// ----- MODE MAPPING -----
 		
@@ -61,7 +71,7 @@
 				};
 				mode = MODE_MAPPING;
 				
-				clog('Dean is maping '+device_name+' ...');
+				clog('Dean is mapping '+device_name+' ...');
 			}else{
 				clog("Dean doesn't known "+device_name+" ... personnaly");
 			}
@@ -84,10 +94,11 @@
 			if(mode != MODE_MAPPING || !data.device || !data.control)	return this;
 
 			data.device.map[data.control] 	= callback;
-			data.device.mapped 				= true;
-			data.control 					= null;
+			data.device.mapped 				= true;			
 
 			clog('Dean has binded '+data.control);
+			data.control 					= null;
+
 			return this;
 
 		},
@@ -137,6 +148,7 @@
 
 		normalize_value: function(){
 			config.normalize = true;
+			console.log('Value will be normalized he said');
 			return this;
 		}
 	};
@@ -210,7 +222,7 @@
 		};
 
 		dispatch(message, device);
-		clog(message);
+		//clog(message);
 		//clog(MIDIMessageEvent);
 	}
 
@@ -224,7 +236,7 @@
 				if(data.note != message.note){
 					data.note = message.note;
 					clog('Dean has found controle '+data.note);
-					//if(callback)	callback(data.note);
+					if(data.callback)	data.callback(data.note);
 				}
 				break;
 			

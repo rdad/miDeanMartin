@@ -8,10 +8,19 @@
 		body{
 			background-image: url("../img/dean_martin.jpg");
 			background-size: cover;
+			overflow: hidden;
+		}
+
+		h1{
+			font-size: 300px;
+			text-align: center;
+			color: rgba(255,255,255,.5);
+			line-height: 100%;
 		}
 	</style>
 </head>
 <body>
+	<h1 id="key">71</h1>
 	<script src="../src/mdm.js"></script>
 	<script>
 		console.log('GO Dean '+mdm.VERSION+' !');
@@ -20,7 +29,9 @@
 
 			// display midi controle code to the console
 			// 
-			mdm.learn();			
+			mdm.learn(function( code ){
+				document.getElementById("key").textContent = code;
+			});			
 		});
 	</script>
 </body>

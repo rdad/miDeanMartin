@@ -27,7 +27,7 @@
 		var ctx 	= canvas.getContext("2d");
 
 		var data = {
-		    labels: ["January", "February", "March", "April", "May", "June", "July"],
+		    labels: ["January", "February", "March", "April", "May", "June", "July", "Août", "September"],
 		    datasets: [
 		        {
 		            label: "My First dataset",
@@ -37,7 +37,7 @@
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(220,220,220,1)",
-		            data: [0, 59, 80, 81, 56, 55, 127]
+		            data: [0, 59, 80, 81, 56, 55, 100, 20, 10]
 		        }
 		    ]
 		};
@@ -51,6 +51,7 @@
 		function update_chart(pt, value){
 			myChart.datasets[0].points[pt].value = value * scale;
 			myChart.update();
+			console.log('chart '+pt+' is updated');
 		}
 
 		mdm.ready(function(){
@@ -61,11 +62,29 @@
 				.control(74).to(function(value){
 					update_chart(0, value);
 				})
-				.control(71).to(function(){
+				.control(71).to(function(value){
 					update_chart(1, value);
 				})
-				.control(21).to(function(){
+				.control(88).to(function(value){
 					update_chart(2, value);
+				})
+				.control(3).to(function(value){
+					update_chart(3, value);
+				})
+				.control(8).to(function(value){
+					update_chart(4, value);
+				})
+				.control(75).to(function(value){
+					update_chart(5, value);
+				})
+				.control(76).to(function(value){
+					update_chart(6, value);
+				})
+				.control(77).to(function(value){
+					update_chart(7, value);
+				})
+				.control(78).to(function(value){
+					update_chart(8, value);
 				})
 				.start();
 		});
