@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Nigthmare</title>
+		<meta charset="utf-8">
+		<style type="text/css">
+			body {
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="container"></div>
+
+		<script src="js/Three.js"></script>
+		<script src="js/PPDebug.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/DAT.GUI.min.js"></script>
+		<script src="../src/mdm.js"></script>
+
+		<script type="text/javascript">
+                    
+            if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			var camera, scene, renderer, loader,stats,
+			particle1, particle2, particle2,
+			light1, light2, light3, mesh;
+                        
+            var effectController = { doIt: true };
+
+			init();
+			animate();
+
+			function init() {
+
+				var container = document.getElementById( 'container' );
+
+				camera = new THREE.Camera( 65, window.innerWidth / window.innerHeight, 1, 1000 );
+				camera.position.z = 50;
+
+				scene = new THREE.Scene();
+                                
+                light1 = new THREE.PointLight( 0xff0040, 10, 50 );
+                light1.position.x = -50;
+                light1.position.z = 35;
+				scene.addLight( light1 );
+                
+                light2 = new THREE.PointLight( 0x0040ff, 10, 50 );
+                light2.position.x = 50;
+                light2.position.z = 35;
+				scene.addLight( light2 );
+                        
+                                
+                        
+                loader = new THREE.JSONLoader( true );
+				document.body.appendChild( loader.statusDomElement );
+				loader.load( { model: "asset/skull.js", callback: function( geometry ) { createMesh( geometry, scene, 100 ) } } );
+
+ 
+                                
+                renderer = new THREE.WebGLRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+                                
+                // post processing
+                
+                PP.init({   renderer: renderer,
+                            scene: scene,
+                            camera: camera,
+                            guiEnabled: true});
+                PP.debug.init();
+                
+                PP.addTexture('diffuse')
+                    .loadShader('wiggle');
+
+                // miDeanMartin init
+                
+                mdm.ready(function(){
+
+					mdm.normalize_value();
+					
+					mdm.map('2- ReMOTE LE')
+						.control(74).to(function(value){
+							update_shader("waveX", value);
+						})
+						.control(71).to(function(value){
+							update_shader("waveY", value);
+						})
+						.control(88).to(function(value){
+							update_shader("speed", value);
+						})
+						.start();
+				});
+			}
+
+			function update_shader(key, value){
+				PP.list.wiggle.material.uniforms[key].value = value;
+			}
+                        
+            function createMesh( geometry, scene, scale ) {
+
+				mesh = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { ambient: 0x555555, color: 0x555555, specular: 0xffffff, shininess: 70, shading: THREE.SmoothShading }  )  );
+				mesh.scale.x = mesh.scale.y = mesh.scale.z = 6;
+                                mesh.position.y = -5;
+				scene.addObject( mesh );
+			}
+
+
+			function animate() {
+				requestAnimationFrame( animate );
+				render();
+			}
+
+			function render() {
+
+                if( mesh ) mesh.rotation.y -= 0.01;
+                
+                PP.start();
+                PP.renderScene().toTexture('diffuse');
+				PP.get('wiggle').set('textureIn').toTexture('diffuse');
+                PP.renderShader('wiggle').toScene();              
+			}
+		</script>
+	</body>
+</html>
