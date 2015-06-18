@@ -6,7 +6,8 @@
 	const MODE_MAPPING 					= 2;
 	const MODE_PLAY 					= 3;
 
-	var web_audio_api_is_supported 		= false,						
+	var web_audio_api_is_supported 		= false,
+		debug							= true,						
 		midi_device 					= [],
 		midi_interface 					= null,	
 		mode 							= MODE_NOT_READY,
@@ -222,7 +223,8 @@
 		};
 
 		dispatch(message, device);
-		//clog(message);
+		if(debug)	clog(message);
+		if(debug)	clog(device);
 		//clog(MIDIMessageEvent);
 	}
 
