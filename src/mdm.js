@@ -59,6 +59,17 @@
 
 		// ----- MODE MAPPING -----
 		
+		capture: function( callback ){
+
+			if(!web_audio_api_is_supported)	clog('Dean has no midi device');
+
+			callback 	= callback;
+			mode 		= MODE_CAPTURE;
+
+			clog('Dean is ready to capturing all ...');
+			return this;
+		},
+
 		map: function(device_name){
 
 			if(!web_audio_api_is_supported)	clog('Dean has no midi device');
@@ -252,6 +263,10 @@
 					if(config.normalize === true)	value = normalize_value(value);
 					d.map[message.note](value);
 				}
+				break;
+
+			case MODE_CAPTURE:
+				callback(message, device);
 				break;
 				
 		}

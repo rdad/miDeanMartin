@@ -1,0 +1,23 @@
+{
+  "name": "miDeanMartin",
+  "version": "1.0.0",
+  "description": "Dean Martin control your browser with MIDI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rdad/miDeanMartin.git"
+  },
+  "keywords": [
+    "javascript",
+    "MIDI"
+  ],
+  "author": "rdad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdad/miDeanMartin/issues"
+  },
+  "homepage": "https://github.com/rdad/miDeanMartin"
+}
