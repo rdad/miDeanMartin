@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MiDeanMartin : Midi capture</title>
+
+	<style>
+		body{
+			background-image: url("../img/dean_martin.jpg");
+			background-size: cover;
+			font-family: Arial, sans-serif;
+		}
+
+		div{
+			width: 40px;
+			height: 80px;
+			background-color: rgba(255,0,0,.3);
+			border-radius: 1%;
+			color: #fff;
+			text-align: center;
+			line-height: 40px;
+			float: left;
+			margin-left: 10px;
+		}
+
+		.value{
+			color: #000;
+			font: bold;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<script src="../src/mdm.js"></script>
+	<script>
+
+		/* This exeemple capture all incoming midi message and display them on screen.
+		Very good to map some new midi devices */
+		
+		console.log('GO Dean '+mdm.VERSION+' !');
+
+		var controls = {};
+
+		function get_message(capture){
+
+			var midi = capture.message,
+				name = "c"+midi.note;
+
+			// new one
+			
+			if(typeof controls[name] == 'undefined'){				
+				document.body.innerHTML += '<div id="'+name+'"><span>'+midi.note+'</span><span class="value"></span></div>';
+				console.log('x');
+			}
+
+			// value
+			// 
+			controls[name] = midi.velocity;
+			document.querySelector('#'+name+'>.value').innerHTML = controls[name];
+
+		}
+
+		mdm.ready(function(){		
+			mdm.capture(get_message);
+		});
+	</script>
+</body>
+</html>

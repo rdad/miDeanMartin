@@ -5,9 +5,10 @@
 	const MODE_LEARN 					= 1;
 	const MODE_MAPPING 					= 2;
 	const MODE_PLAY 					= 3;
+	const MODE_CAPTURE 					= 4;
 
 	var web_audio_api_is_supported 		= false,
-		debug							= true,						
+		debug							= false,						
 		midi_device 					= [],
 		midi_interface 					= null,	
 		mode 							= MODE_NOT_READY,
@@ -63,8 +64,11 @@
 
 			if(!web_audio_api_is_supported)	clog('Dean has no midi device');
 
-			callback 	= callback;
+			data = {
+				callback: null
+			};
 			mode 		= MODE_CAPTURE;
+			if(callback)	data.callback = callback;
 
 			clog('Dean is ready to capturing all ...');
 			return this;
@@ -266,7 +270,11 @@
 				break;
 
 			case MODE_CAPTURE:
-				callback(message, device);
+
+				if(data.callback)	data.callback({
+					message: message,
+					device: device
+				});
 				break;
 				
 		}
