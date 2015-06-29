@@ -31,6 +31,7 @@
 	</style>
 </head>
 <body>
+	<button id="bt_get">Get javascript mapping code</button>
 	<script src="../src/mdm.js"></script>
 	<script>
 
@@ -39,26 +40,38 @@
 		
 		console.log('GO Dean '+mdm.VERSION+' !');
 
-		var controls = {};
+		var controls = {},
+			code = "mdm.map('MIDIIN3 (ReMOTE ZeRO SL)')";
+			device = null;
 
 		function get_message(capture){
 
-			var midi = capture.message,
-				name = "c"+midi.note;
+			var midi 	= capture.message,
+				name 	= "c"+midi.note;
+			device 		= capture.device.name;
 
 			// new one
 			
 			if(typeof controls[name] == 'undefined'){				
 				document.body.innerHTML += '<div id="'+name+'"><span>'+midi.note+'</span><span class="value"></span></div>';
-				console.log('x');
+				
+				code += ".control("+name+").to(function(value){
+					// action
+				})\n";
 			}
 
 			// value
 			// 
 			controls[name] = midi.velocity;
 			document.querySelector('#'+name+'>.value').innerHTML = controls[name];
-
 		}
+
+		function get_result(){
+			code = "mdm.map('"+device+"')"+code+".start();";
+			alert(code);
+		}
+
+		document.getElementById("bt_get").addEventListener("click", get_result);
 
 		mdm.ready(function(){		
 			mdm.capture(get_message);
