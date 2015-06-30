@@ -177,7 +177,7 @@
 	// --- private methods ---
 	
 	function clog( str ){
-		console.log(str);
+		console.log('miDeanMartin: '+str);
 	}
 
 	function init(){
