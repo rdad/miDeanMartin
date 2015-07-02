@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MiDeanMartin : Map Novation Twitch/title>
+
+	<style>
+		body{
+			margin:0;
+			font-family: Arial, sans-serif;
+		}
+
+		#twitch{
+			background-image: url("asset/img/twitch.jpg");
+			background-size: contain;
+			background-repeat: no-repeat;
+			width: 1014px;
+			height: 340px;
+			margin: 10% auto;
+			position: relative;
+			font-weight: bold;
+		}
+
+		.select{
+			border: 2px solid #fff;
+		}
+
+		#twitch div{
+			position: absolute;
+			width: 40px;
+			height: 40px;
+			background-color: rgba(255,0,0,.3);
+			border-radius: 50%;
+			color: #fff;
+			text-align: center;
+			line-height: 40px;
+		}
+	</style>
+</head>
+<body>
+	<div id="twitch">
+		
+	</div>
+	<script src="../src/mdm.js"></script>
+	<script>
+		console.log('GO Dean '+mdm.VERSION+' !');
+
+		var selected = null;
+
+		function update(code, value){
+			if(selected)	selected.className = '';
+			selected = document.getElementById('r-'+code);
+			selected.innerHTML = value;
+			selected.className = 'select';
+		}
+
+		mdm.ready(function(){
+			
+			mdm.map('MIDIIN3 (ReMOTE ZeRO SL)')
+				.control(0).to(function(value){
+					update('0', value);
+				})
+				.control(1).to(function(value){
+					update(1, value);
+				})
+				.control(2).to(function(value){
+					update(2, value);
+				})
+				.control(3).to(function(value){
+					update(3, value);
+				})
+				.control(4).to(function(value){
+					update(4, value);
+				})
+				.control(5).to(function(value){
+					update(5, value);
+				})
+				.control(6).to(function(value){
+					update(6, value);
+				})
+				.control(7).to(function(value){
+					update(7, value);
+				})
+				.control(8).to(function(value){
+					update(8, value);
+				})
+				.control(9).to(function(value){
+					update(9, value);
+				})
+				.control(10).to(function(value){
+					update(10, value);
+				})
+				.control(11).to(function(value){
+					update(11, value);
+				})
+				.control(12).to(function(value){
+					update(12, value);
+				})
+				.control(13).to(function(value){
+					update(13, value);
+				})
+				.control(14).to(function(value){
+					update(14, value);
+				})
+				.control(15).to(function(value){
+					update(15, value);
+				})
+				.start();
+		});
+	</script>
+</body>
+</html>

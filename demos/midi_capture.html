@@ -28,6 +28,12 @@
 			font: bold;
 			display: block;
 		}
+
+		#bt_get{
+			position: absolute;
+			right: 10px;
+			top: 10px;
+		}
 	</style>
 </head>
 <body>
@@ -41,7 +47,7 @@
 		console.log('GO Dean '+mdm.VERSION+' !');
 
 		var controls = {},
-			code = "mdm.map('MIDIIN3 (ReMOTE ZeRO SL)')";
+			code = "";
 			device = null;
 
 		function get_message(capture){
@@ -55,9 +61,7 @@
 			if(typeof controls[name] == 'undefined'){				
 				document.body.innerHTML += '<div id="'+name+'"><span>'+midi.note+'</span><span class="value"></span></div>';
 				
-				code += ".control("+name+").to(function(value){
-					// action
-				})\n";
+				code += ".control("+name+").to(function(value){  // action; })\n";
 			}
 
 			// value

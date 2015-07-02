@@ -240,7 +240,7 @@
 		dispatch(message, device);
 		if(debug)	clog(message);
 		if(debug)	clog(device);
-		//clog(MIDIMessageEvent);
+		console.log(message);
 	}
 
 
