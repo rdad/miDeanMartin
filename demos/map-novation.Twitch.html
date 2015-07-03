@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>MiDeanMartin : Map Novation Twitch/title>
+	<title>MiDeanMartin : Map Novation TWITCH</title>
 
 	<style>
 		body{
@@ -14,9 +14,10 @@
 			background-image: url("asset/img/twitch.jpg");
 			background-size: contain;
 			background-repeat: no-repeat;
-			width: 1014px;
+			background-position: center;
+			width: 1024px;
 			height: 340px;
-			margin: 10% auto;
+			margin: 0 auto;
 			position: relative;
 			font-weight: bold;
 		}
@@ -39,8 +40,8 @@
 </head>
 <body>
 	<div id="twitch">
-		
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../src/mdm.js"></script>
 	<script>
 		console.log('GO Dean '+mdm.VERSION+' !');
@@ -53,6 +54,10 @@
 			selected.innerHTML = value;
 			selected.className = 'select';
 		}
+
+		$(function(){
+			$('#twitch').css('height', window.innerHeight+'px');
+		});
 
 		mdm.ready(function(){
 			
